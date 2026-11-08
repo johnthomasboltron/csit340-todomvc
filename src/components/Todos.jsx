@@ -2,10 +2,7 @@ import { useState } from 'react'
 
 function Todos() {
     const [text, setText] = useState('')
-    const [todos, setTodos] = useState([
-    { id: 1, text: 'Learn the spread operator', completed: false },
-    { id: 2, text: 'Set up Tailwind', completed: true },
-  ])
+    const [todos, setTodos] = useState([])
   
     function handleSubmit(e) {
         e.preventDefault()
@@ -25,6 +22,9 @@ function Todos() {
             )
         )
     }
+    function handleDelete(id) {
+      setTodos(todos.filter((todo) => todo.id !== id))
+    }
 
   return (
     <section className="mx-auto max-w-[550px]">
@@ -42,6 +42,8 @@ function Todos() {
           />
         </form>
 
+        {todos.length > 0 && (
+          <>
         <main className="relative border-t border-[#e6e6e6]">
           <input id="toggle-all" type="checkbox" className="peer sr-only" />
 
@@ -77,6 +79,7 @@ function Todos() {
 
               <button
                 type="button"
+                onClick={() => handleDelete(todo.id)}
                 className="absolute right-[10px] hidden size-10 cursor-pointer text-[30px] text-[#949494] group-hover:block hover:text-[#c18585]"
               >
                 ×
@@ -128,6 +131,8 @@ function Todos() {
             Clear completed
           </button>
         </footer>
+        </>
+        )}
       </div>
     </section>
   )
